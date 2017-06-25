@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>野山参专卖</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/semantic-ui/2.2.9/semantic.min.css">
+    <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+
+    <script src="http://cdn.bootcss.com/semantic-ui/2.2.9/semantic.min.js"></script>
+</head>
+<body>
+<div class="ui justified container">
+<div id="mainBody" class="ui centered  card">
+
+</div>
+</div>
+</body>
+<script>
+    $(document).ready(function(){
+        var urlstr=window.location.toString();
+        var value=urlstr.split('=');
+        getProductInfo(value[1]);
+    });
+    function getProductInfo(id) {
+        $.ajax({
+            url:"/getoneproduct?id="+id,
+            type:"GET",
+            success:function(data){
+
+                var trHtml="<div class='image'><img src='"+data.imgUrl+"'></div>"+
+                        "<div class='content'> <a class='header'>"+data.name+"</a> <div class='meta'><span class='date'>年份:"+data.age+"年&nbsp;&nbsp;产地:"+data.place+"&nbsp;&nbsp;等级:"+data.level+"</span>"+
+                        "</div> <div class='description'>"+data.description+"</div> </div> <div class='extra content'> 价格:"+data.price+"&nbsp;&nbsp;证书编号:"+data.code+
+                        "</div>";
+
+                $("#mainBody").append(trHtml);
+            }});
+    }
+</script>
+</html>

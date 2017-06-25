@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>参燕草堂</title>
+    <title>野山参专卖</title>
     <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/semantic-ui/2.2.9/semantic.min.css">
     <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 
     <script src="http://cdn.bootcss.com/semantic-ui/2.2.9/semantic.min.js"></script>
+    <script src="js/qrcode.js"></script>
 </head>
 <body>
 <!-- Page Contents -->
@@ -17,7 +18,7 @@
             <div class="ui large secondary pointing menu" style="margin-left: 50%">
                 <a class="item" href="main.html">欢&nbsp;&nbsp;&nbsp;&nbsp;迎</a>
                 <a class="active item">产品管理</a>
-                <a class="item">产品展示</a>
+                <a class="item" href="showproducts.html">产品展示</a>
                 <a class="item">健康管理</a>
                 <a class="item">联系我们</a>
             </div>
@@ -27,59 +28,28 @@
             <table class="ui compact celled definition table">
                 <thead class="full-width">
                 <tr>
-                    <th>生成二维码</th>
-                    <th>二维码图片</th>
+                    <th>编号</th>
+                    <th>二维码</th>
                     <th>产品名称</th>
                     <th>年龄</th>
                     <th>价格</th>
                     <th>图片</th>
+                    <th>证书编号</th>
+                    <th>描述</th>
+                    <th>产地</th>
+                    <th>等级</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td class="collapsing">
-                        <div class="ui fitted slider checkbox">
-                            <input type="checkbox"> <label></label>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>John Lilki</td>
-                    <td>September 14, 2013</td>
-                    <td>jhlilk22@yahoo.com</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td class="collapsing">
-                        <div class="ui fitted slider checkbox">
-                            <input type="checkbox"> <label></label>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Jamie Harington</td>
-                    <td>January 11, 2014</td>
-                    <td>jamieharingonton@yahoo.com</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td class="collapsing">
-                        <div class="ui fitted slider checkbox">
-                            <input type="checkbox"> <label></label>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Jill Lewis</td>
-                    <td>May 11, 2014</td>
-                    <td>jilsewris22@yahoo.com</td>
-                    <td>Yes</td>
-                </tr>
+                <tbody id="mainBody">
+
+
                 </tbody>
                 <tfoot class="full-width">
                 <tr>
                     <th></th>
-                    <th colspan="5">
+                    <th colspan="10">
                         <div id="addBtn" class="ui right floated small primary labeled icon button"><i class="plus icon"></i>添加</div>
-                        <div class="ui small  button">二维码 </div>
-                        <div class="ui small  disabled button">生成全部</div>
                     </th>
                 </tr>
                 </tfoot>
@@ -91,7 +61,7 @@
 </div>
 
 
-<div class="ui modal">
+<div id="addModel" class="ui modal">
     <i class="close icon"></i>
     <div class="header">
         添加产品
@@ -104,22 +74,45 @@
             <div class="ui header">请在下方添加产品相关信息</div>
 
 
-            <form class="ui form">
+            <form class="ui form" enctype="multipart/form-data" action="/upload" method="post">
                 <div class="field">
                     <label>名称</label>
-                    <input type="text" name="first-name" placeholder="名称">
+                    <input type="text" name="productName" placeholder="名称">
                 </div>
                 <div class="field">
                     <label>年份</label>
-                    <input type="text" name="last-name" placeholder="年份">
+                    <input type="text" name="age" placeholder="年份">
                 </div>
                 <div class="field">
                     <label>价格</label>
-                    <input type="text" name="last-name" placeholder="价格">
+                    <input type="text" name="price" placeholder="价格">
+                </div>
+                <div class="field">
+                    <label>等级</label>
+                    <input type="text" name="level" placeholder="价格">
+                </div>
+                <div class="field">
+                    <label>产地</label>
+                    <input type="text" name="place" placeholder="价格">
+                </div>
+                <div class="field">
+                    <label>证书编号</label>
+                    <input type="text" name="code" placeholder="价格">
+                </div>
+                <div class="field">
+                    <label>描述</label>
+                    <textarea rows="2" name="description"></textarea>
                 </div>
                 <div class="field">
                     <label>图片</label>
-                    <input type="file" name="last-name" placeholder="图片">
+                    <input type="file" name="file" placeholder="图片" accept="image/gif,image/jpeg,image/jpg,image/png">
+                </div>
+
+                <div class="actions">
+                    <div class="ui black deny button">
+                        取消
+                    </div>
+                    <button class="ui positive button" type="submit">提交</button>
                 </div>
 
             </form>
@@ -127,13 +120,32 @@
 
         </div>
     </div>
-    <div class="actions">
-        <div class="ui black deny button">
-            取消
+
+</div>
+<!--弹出层-->
+<div id="deleteModel" class="ui basic modal">
+    <i class="close icon"></i>
+    <div class="header">
+        删除商品信息
+    </div>
+    <div class="image content">
+        <div class="image">
+            <i class="warning sign icon"></i>
         </div>
-        <div class="ui positive right labeled icon button">
-            保存
-            <i class="checkmark icon"></i>
+        <div class="description">
+            <p>你确定将此条产品信息删除吗?</p>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="two fluid ui inverted buttons">
+            <div class="ui cancel red basic inverted button">
+                <i class="remove icon"></i>
+                不删除
+            </div>
+            <div id="sureDelete" class="ui ok green basic inverted button">
+                <i class="checkmark icon"></i>
+                是的，我要删除
+            </div>
         </div>
     </div>
 </div>
@@ -141,16 +153,77 @@
 </body>
 
 <script>
+
+
+    $(document).ready(function(){
+        getProductInfo();
+
+    });
+
+
     $("#addBtn").click(function () {
-        $('.ui.modal')
+        $('#addModel')
             .modal('show')
         ;
     })
 
-    $.ajax({
-        url:"/products",
-        success:function(result){
 
-    }});
+    $(document).on('click', '.createQrCode', function(e) {
+       // alert($(this).parent().prev().text());
+        $(this).html("");
+        var qrcode = new QRCode(this, {
+            width : 96,//设置宽高
+            height : 96
+        });
+        qrcode.makeCode(location.origin+"/oneproduct.html?id="+$(this).parent().prev().text());
+
+    });
+    var deleteId="";
+    $(document).on('click','.delete',function (e) {
+        $('#deleteModel')
+            .modal('show')
+        ;
+        deleteId=$(this).attr("rel");
+    });
+
+    $("#sureDelete").click(function () {
+        deleteProductInfo(deleteId);
+    });
+    
+    function deleteProductInfo(id) {
+        $.ajax({
+            url:"/deleteproduct?id="+id,
+            type:"GET",
+            success:function(result){
+                if(result=="success"){
+                    getProductInfo();
+                }else{
+                    alert("操作失败");
+                }
+            }});
+    }
+
+    function getProductInfo() {
+        $.ajax({
+            url:"/getproducts",
+            type:"GET",
+            success:function(result){
+                $("#mainBody").html("");
+                var trHtml="";
+                var hostStr=location.host;
+                for(var i=0;i<result.length;i++){
+                    var data=result[i];
+                    trHtml=trHtml+"<tr><td>"+data.id+"</td><td> <div class='ui small positive button createQrCode'>生成二维码</div></td>"+
+                        "<td>"+data.name+"</td><td>"+data.age+"</td><td>"+data.price+"</td><td>"+data.imgUrl+"</td><td>"+data.code+"</td> <td>"+data.description+"</td><td>"+data.place+"</td> <td>"+data.level+"</td> <td><div rel='"+data.id+"' class='ui small negative button delete'>删除</div></td></tr>";
+                }
+                $("#mainBody").append(trHtml);
+            }});
+    }
+
+    /*  $.ajax({
+          url:"/products",
+          success:function(result){
+
+      }});*/
 </script>
 </html>
