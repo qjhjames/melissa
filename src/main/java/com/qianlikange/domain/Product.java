@@ -5,17 +5,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * Created by qiujunhong on 2017/5/9.
  */
 @Entity
 @Table(name = "product")
-public class Product{
+public class Product implements Serializable{
     @Id
     @GeneratedValue
     private Integer id;
     private String name;
+    private String imgUrl;
+    private String age;
 
     public Integer getId() {
         return id;
@@ -41,24 +44,58 @@ public class Product{
         this.imgUrl = imgUrl;
     }
 
-    public Integer getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
-    public Double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    private String imgUrl;
-    private Integer age;
-    private Double price;
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    private String price;
+    private String code;
+    private String level;
+    private String place;
+    private String description;
     public Product(){}
 }

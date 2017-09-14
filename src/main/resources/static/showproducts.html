@@ -4,19 +4,13 @@
     <!-- Standard Meta -->
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
     <!-- Site Properties -->
-    <title>参燕草堂</title>
+    <title>野山参专卖</title>
 
     <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/semantic-ui/2.2.9/semantic.min.css">
+    <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/semantic-ui/2.2.9/semantic.min.js"></script>
     <style type="text/css">
-
-
-        .hidden.menu {
-            display: none;
-        }
-
         .masthead.segment {
             min-height: 700px;
             padding: 1em 0em;
@@ -100,59 +94,56 @@
 
 
     </style>
-
-
-    <script>
-        $(document)
-            .ready(function() {
-
-                // fix menu when passed
-                $('.masthead')
-                    .visibility({
-                        once: false,
-                        onBottomPassed: function() {
-                            $('.fixed.menu').transition('fade in');
-                        },
-                        onBottomPassedReverse: function() {
-                            $('.fixed.menu').transition('fade out');
-                        }
-                    })
-                ;
-
-                // create sidebar and attach to menu open
-                $('.ui.sidebar')
-                    .sidebar('attach events', '.toc.item')
-                ;
-
-            })
-        ;
-    </script>
 </head>
 <body>
 
 <!-- Page Contents -->
 <div class="pusher">
-    <div class="ui inverted vertical white masthead center aligned segment" style="height: 100%;background: whitesmoke">
+    <div class="ui inverted vertical white masthead center aligned segment" style="height:auto;background: whitesmoke">
 
         <div class="ui container">
             <div class="ui large secondary pointing menu" style="margin-left: 50%">
-                <a class="active item">欢&nbsp;&nbsp;&nbsp;&nbsp;迎</a>
+                <a class="item" href="main.html">欢&nbsp;&nbsp;&nbsp;&nbsp;迎</a>
                 <a class="item" href="product.html">产品管理</a>
-                <a class="item" href="showproducts.html">产品展示</a>
+                <a class="active item">产品展示</a>
                 <a class="item">健康管理</a>
                 <a class="item">联系我们</a>
             </div>
         </div>
-        <div class="ui container" style="width:100%;height:100px;">
-            <img class="ui fluid image" src="images/bg-1.jpg">
-            <div class="ui huge primary button" style="margin-top: 10px">开始管理<i class="right arrow icon"></i></div>
-        </div>
+        <div class="ui fluid container" style="width:100%;height:100px;">
+
+            <div id="mainBody" class="ui five column grid">
+
+            </div>
 
     </div>
 
 </div>
-
+</div>
 </body>
+<script>
+    $(document).ready(function(){
+        getProductInfo();
+    });
+    function getProductInfo() {
+        $.ajax({
+            url:"/getproducts",
+            type:"GET",
+            success:function(result){
+                var trHtml="";
+                for(var i=0;i<result.length;i++){
+                    var data=result[i];
+                    trHtml=trHtml+"<div class='column'><div class='ui fluid card'><div class='image'><img src='"+data.imgUrl+"'></div>"+
+                    "<div class='content'> <a class='header'>"+data.name+"</a> <div class='meta'><span class='date'>年份:"+data.age+"年&nbsp;&nbsp;产地:"+data.place+"&nbsp;&nbsp;等级:"+data.level+"</span>"+
+                    "</div> <div class='description'>"+data.description+"</div> </div> <div class='extra content'> 价格:"+data.price+"&nbsp;&nbsp;证书编号:"+data.code+
+                    "</div> </div> </div>";
+
+                }
+                $("#mainBody").append(trHtml);
+            }});
+    }
+</script>
+
 
 </html>
 
