@@ -28,6 +28,7 @@ repositories {
 
 dependencies {
 	/*compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+
 	compile('net.sourceforge.nekohtml:nekohtml:1.9.15')*/
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-web')
