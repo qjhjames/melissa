@@ -4,6 +4,7 @@ import com.qianlikange.ProductDao.ProductRepository;
 import com.qianlikange.data.ConfigData;
 import com.qianlikange.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,14 @@ import java.util.UUID;
  */
 @Controller
 public class UploadController {
+    @Value("${SAVEIMAGEURL}")
+    private  String SAVEIMAGEURL;
+
+    @Value("${GETIMAGEURL}")
+    private  String GETIMAGEURL;
+    private String userPageSize;
+
+
     @Autowired
     private ProductRepository productRepository;
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -29,7 +38,7 @@ public class UploadController {
             try {
                 UUID uuid = UUID.randomUUID();
                 BufferedOutputStream out = new BufferedOutputStream(
-                        new FileOutputStream(new File(ConfigData.SAVEIMAGEURL+uuid.toString()+file.getOriginalFilename())));
+                        new FileOutputStream(new File(SAVEIMAGEURL+uuid.toString()+file.getOriginalFilename())));
                 out.write(file.getBytes());
                 out.flush();
                 out.close();
@@ -41,7 +50,7 @@ public class UploadController {
                 product.setDescription(description);
                 product.setLevel(level);
                 product.setPlace(place);
-                product.setImgUrl(ConfigData.GETIMAGEURL+uuid.toString()+file.getOriginalFilename());
+                product.setImgUrl(GETIMAGEURL+uuid.toString()+file.getOriginalFilename());
                 productRepository.save(product);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
