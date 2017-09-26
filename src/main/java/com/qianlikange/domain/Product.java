@@ -18,6 +18,16 @@ public class Product implements Serializable{
     private Integer id;
     private String name;
     private String imgUrl;
+
+    public String getImgUrl2() {
+        return imgUrl2;
+    }
+
+    public void setImgUrl2(String imgUrl2) {
+        this.imgUrl2 = imgUrl2;
+    }
+
+    private String imgUrl2;
     private String age;
 
     public Integer getId() {

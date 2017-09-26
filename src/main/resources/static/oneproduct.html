@@ -11,7 +11,7 @@
     <script src="http://cdn.bootcss.com/semantic-ui/2.2.9/semantic.min.js"></script>
 </head>
 <body>
-<div class="ui justified container">
+<div class="ui container">
 <div id="mainBody" class="ui centered  card">
 
 </div>
@@ -29,7 +29,7 @@
             type:"GET",
             success:function(data){
 
-                var trHtml="<div class='image'><img src='"+data.imgUrl+"'></div>"+
+                var trHtml="<div class='ui slide masked reveal image'><img src='"+data.imgUrl+"' class='visible content'><img src='"+data.imgUrl2+"' class='hidden  content'></div>"+
                         "<div class='content'> <a class='header'>"+data.name+"</a> <div class='meta'><span class='date'>年份:"+data.age+"年&nbsp;&nbsp;产地:"+data.place+"&nbsp;&nbsp;等级:"+data.level+"</span>"+
                         "</div> <div class='description'>"+data.description+"</div> </div> <div class='extra content'> 价格:"+data.price+"&nbsp;&nbsp;证书编号:"+data.code+
                         "</div>";

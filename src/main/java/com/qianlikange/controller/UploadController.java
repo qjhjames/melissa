@@ -31,10 +31,10 @@ public class UploadController {
     @Autowired
     private ProductRepository productRepository;
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public String upload(Model model, @RequestParam("file") MultipartFile file, @RequestParam("productName") String productName,
+    public String upload(Model model, @RequestParam("file") MultipartFile file,@RequestParam("file2") MultipartFile file2, @RequestParam("productName") String productName,
                          @RequestParam("age") String age, @RequestParam("price") String price, @RequestParam("level") String level,
                          @RequestParam("place") String place, @RequestParam("code") String code, @RequestParam("description") String description){
-        if (!file.isEmpty()) {
+        if (!file.isEmpty()||!file2.isEmpty()) {
             try {
                 UUID uuid = UUID.randomUUID();
                 BufferedOutputStream out = new BufferedOutputStream(
@@ -42,6 +42,12 @@ public class UploadController {
                 out.write(file.getBytes());
                 out.flush();
                 out.close();
+                UUID uuid2 = UUID.randomUUID();
+                BufferedOutputStream out2 = new BufferedOutputStream(
+                        new FileOutputStream(new File(SAVEIMAGEURL+uuid2.toString()+file2.getOriginalFilename())));
+                out2.write(file.getBytes());
+                out2.flush();
+                out2.close();
                 Product product=new Product();
                 product.setName(productName);
                 product.setAge(age);
@@ -51,6 +57,7 @@ public class UploadController {
                 product.setLevel(level);
                 product.setPlace(place);
                 product.setImgUrl(GETIMAGEURL+uuid.toString()+file.getOriginalFilename());
+                product.setImgUrl2(GETIMAGEURL+uuid2.toString()+file2.getOriginalFilename());
                 productRepository.save(product);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
