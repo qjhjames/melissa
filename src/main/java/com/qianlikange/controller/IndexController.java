@@ -11,7 +11,7 @@ import java.util.Map;
  */
 @Controller
 public class IndexController {
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public String helloHtml(Model model){
 
         return"index";

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/semantic-ui/2.2.9/semantic.min.css">
+    <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+
+    <script src="http://cdn.bootcss.com/semantic-ui/2.2.9/semantic.min.js"></script>
+
+    <title>野山参</title>
+</head>
+<body>
+<div class="panel panel-primary">
+    <div class="ui basic modal">
+        <!--<i class="close icon"></i>-->
+        <div class="header">
+            出错啦！
+        </div>
+        <div class="image content">
+            <div class="image">
+                <i class="archive icon"></i>
+            </div>
+            <div class="description">
+                <p>添加失败，请重新添加</p>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="two fluid ui inverted buttons">
+
+                <div class="ui ok green basic inverted button">
+                    <i class="checkmark icon"></i>
+                    <a href="../showproducts.html"> 返回列表</a>
+                </div>
+
+                <div class="ui ok green basic inverted button">
+                    <i class="checkmark icon"></i>
+                    <a href="../product.html"> 重新添加</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script th:inline="javascript">
+    $(document).ready(function(){
+        $('.ui.basic.modal')
+            .modal('show')
+        ;   })
+
+    $('.ui.basic.modal').click(function () {
+        location.href="../product.html"
+    })
+</script>
+</html>
